@@ -1,0 +1,71 @@
+avr-gcc -g -Os -mmcu=atmega16 -c test.c
+avr-gcc -g -mmcu=atmega16 -o test.elf test.o
+avr-objcopy -j .text -j .data -O ihex test.elf test.hex
+sudo avrdude -c usbasp -p atmega16 -U flash:w:test.hex
+sudo avrdude -c avrispmkII -p atmega2560 -U flash:w:test.hex
+
+Reading Fuse Bits :- avrdude -c usbasp -p atmega16 -U lfuse:r:low_fuse_val.hex:h -U hfuse:r:high_fuse_val.hex:h
+Writing Fuse Bits :- avrdude -c usbasp -p atmega16 -U lfuse:w:0xc2:m -U hfuse:w:0x99:m -U efuse:w:0xff:m
+
+
+
+sudo udevadm control --reload-rules
+
+sudo systemctl restart udev
+
+sudo avrdude -c avrispmkII -P usb -p atmega2560 -U flash:w:test.hex -B 22
+
+
+Errors :- 
+
+1. Programmer Error
+avrdude: error: could not find USB device with vid=0x16c0 pid=0x5dc vendor='www.fischl.de' product='USBasp'
+
+2. MicroController(8-16-32) Error
+avrdude: warning: cannot set sck period. please check for usbasp firmware update.
+avrdude: error: program enable: target doesn't answer. 1 
+avrdude: initialization failed, rc=-1
+         Double check connections and try again, or use -F to override
+         this check.
+       
+3. Programmer not detected on /dev/ttyS0
+avrdude: ser_open(): can't set attributes for device "/dev/ttyS0": Inappropriate ioctl for device
+
+4. MicroController Error(2560)
+avrdude: stk500v2_command(): command failed
+avrdude: stk500v2_program_enable(): bad AVRISPmkII connection status: Target not detected
+avrdude: initialization failed, rc=-1
+         Double check connections and try again, or use -F to override
+         this check.
+
+5.         
+avrdude: stk500v2_command(): command failed
+avrdude: stk500v2_program_enable(): bad AVRISPmkII connection status: MOSI fail, RST fail, SCK fail, Target not detected
+
+
+
+
+y = 6.26x - 3558
+
+
+
+
+
+Checks :-
+-F chip check
+-D erase check
+
+Fuse Bits (For 16):- 
+Case 1: 1 MHz Internal Clock (default), Low Fuse: 0xE1 High Fuse: 0x99
+
+Case 2: 8 MHz Internal Clock, Low Fuse: 0xE4 High Fuse: 0x99
+
+Case 3: 16 MHz External Crystal, Low Fuse: 0xFF High Fuse: 0x99
+
+
+BB-PSC
+cytron.com.my
+
+lpc2148
+
+R75557

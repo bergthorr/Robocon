@@ -1,0 +1,10 @@
+1. Enable SPI after setting all the bits(i.e. Master mode, data order mode, etc). 
+	i.e 	DDRB|=(1<<MOSI)|(1<<SCK)|(1<<SS);	//Set Mosi clock and attention as output
+		SPCR|=(1<<DORD);			//Byte is transmitted LSB first
+		SPCR|=(1<<MSTR);			//Master mode
+		SPCR|=(1<<CPOL);			//Clock is high initially
+		SPCR|=(1<<CPHA);	
+		SPCR|=(1<<SPR0);
+		SPCR|=(1<<SPE);				//Enable SPI at last
+		
+2. Set SS pin of both master and slave to input. Connect SS pin of master to VCC and ss pin of slave to gnd

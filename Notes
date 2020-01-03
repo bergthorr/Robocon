@@ -1,0 +1,5 @@
+1. PH2 contions XCK2 (External clock of USART2), and if XCK is used as gpio it disables the timer4 whose OCR's are on PORTH
+2. PS2 debouncing has been solved using botton released technique i.e keep setting a flag till the button is released and monitor that flag.
+3. To stop erasing eeprom during buring a uC set the EESAVE fuse bit.
+4. If a while condition contains && then if condition contains || to check if loop has breaked and vice versa.
+5. To detect if a sensor has given stable vales use 2 variables which will store an initial value and a variable which will store 2nd value (use a flag here for storing )  

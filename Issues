@@ -1,0 +1,49 @@
+Whatever component it may be (Motor drivers, PS2, etc) please read the datasheet
+
+Codeing
+1. Solved 
+Issue :- PS2 giving wrong bitmaps.
+Cause :- The delay between 2 consecutive bits is very less
+Solution :-  Increase the delay between 2 bits
+
+2. Solved
+Issue :- Disconnecting the PS2 keeps the system on in previous state
+Cause :- Dont know the exact reason
+Solution :- Always keep a check on id of PS2 during communication, when disconnected this will not give the required id and particular action can be taken
+
+3. Unsolved 
+Issue :- Duel Motor drivers (Herculus) getting damaged
+Cause(Maybe) :- The PWM frequency given to drivers is more than 10KHz or there is static charge interaction with drivers.
+
+4. Solved 
+Issue :- When PH2(XCK2 External Clock of USART2) used as gpio for Chip select of max7219, timer 4 does not function.
+Cause :- Dont know
+Solution (Temporariy) :- Close the USART2 module from PRR1 register
+
+5. Solved 
+Issue :- One Locomotion motor(OCR4A) not working when we used encoder which had software interrupt on timer 0(OC2B)
+Cause :- Pins OCR4A and OC2B are same
+Solution :- Use different channel for encoder interrupt
+
+6. Solved
+Issue :- The memory of eeprom gets erased when performing a code burn
+Cause :- While burning the code the a eeprom erase cycle is performed
+Solution :- Setting EESAVE fuse bit does not perform a erase cycle
+
+7. Solved
+Issue :- Consider a multi-functionality of PS2, R2 + UP, UP. When pressed UP the bot moves forward, when pressed R2 + UP the bot does its functionality and moves forward too
+Cause :- Same button functionality
+Solution :- Keep a check on default value of data of R2, when UP button is pressed i.e. if(data[0]==UP && data[1]==0xff){}
+
+8. Unsolved
+Issue :- When using 14.7MHz guideway works fine, but its direction gives 11 when using 8MHz. Its pins are PF4 (ADC4), PF5 (ADC5).
+Cause :- Dont Know
+Solution :- Changed the dir bits of guideway on 8MHz
+
+Elec
+1. Check the specs of motors, motor drivers and all other components
+2. Always use fuse in the circuit
+3. Try to keep circuits isolated
+4. Try to keep different components (fuse, motor drivers, sensors, motors, etc) seperated and isolated
+5. Check if there is static charge, magnets, water, etc near components. Use antistatic materials like polymer, wood, etc below each component. Stick double tabe below all components.
+6. To check voltage drop/rise across components which have a inductor coil, we need to disconnect that component and check across terminals. Inductors have a different voltage drop/rise function(said by rao).
